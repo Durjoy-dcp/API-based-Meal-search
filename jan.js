@@ -13,11 +13,11 @@ const displayMeal = meal => {
     MealContainer.innerHTML = '';
     meal = meal.slice(0, 6);
     meal.forEach(item => {
-        // console.log(item);
+        console.log(item);
         const div = document.createElement('div');
         div.classList.add('col');
 
-        div.innerHTML = ` <div class="card h-100">
+        div.innerHTML = ` <div class="card h-100" onclick="idDetails(${item.idMeal})">
         <img src="${item.strMealThumb}" class="card-img-top" alt="...">
         <div class="card-body">
         <div class="">
@@ -30,3 +30,12 @@ const displayMeal = meal => {
 
 }
 mealLoad();
+
+
+function idDetails(id) {
+    // console.log(id);
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then(res => res.json())
+        .then(data => console.log(data.meals[0]))
+}
+
