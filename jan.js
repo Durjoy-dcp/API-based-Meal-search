@@ -17,7 +17,10 @@ const displayMeal = meal => {
         const div = document.createElement('div');
         div.classList.add('col');
 
-        div.innerHTML = ` <div class="card h-100" onclick="idDetails(${item.idMeal})">
+        //calling the modal from the here  
+
+        div.innerHTML = ` 
+        <div class="card h-100" onclick="idDetails(${item.idMeal})" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
         <img src="${item.strMealThumb}" class="card-img-top" alt="...">
         <div class="card-body">
         <div class="">
@@ -36,6 +39,25 @@ function idDetails(id) {
     // console.log(id);
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
         .then(res => res.json())
-        .then(data => console.log(data.meals[0]))
-}
+        .then(data => displayModal(data.meals[0]))
 
+
+}
+function displayModal(details) {
+    const modalPart = document.getElementById('modal-body');
+    // modalPart.innerText = details;
+    document.getElementById('staticBackdropLabel').innerText = details.strMeal;
+
+    // changing the innerHTML of modal here 
+
+    modalPart.innerHTML = `<div class="card w-100">
+    <img src="${details.strMealThumb}" class="card-img-top" alt="...">
+    <div class="card-body">
+    <h5 class="card-title">${details.strMeal}</h5>
+    <p class="card-text">${details.strInstructions}</p>
+    </div>
+  </div>`
+
+
+
+}
